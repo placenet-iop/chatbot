@@ -37,8 +37,18 @@ const ChatBotCanvas = () => {
         maxAzimuthAngle={Math.PI * 0.05}
       /> */}
       <ambientLight />
+      <directionalLight
+        position={[-5, 5, 5]}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
      {/* <Character /> */}
-      <Gaudi position={[0, -0.3, 4]} />
+
+     <group position={[0, -0.35, 4.2]}>
+      <Gaudi />
+     </group>
+      
      
 
      <shadowMaterial transparent opacity={0.2} />

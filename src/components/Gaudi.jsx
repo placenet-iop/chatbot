@@ -751,18 +751,18 @@ const Gaudi = (props) => {
           </group>
           <group name="Geometry">
             <group name="geo">
-              <skinnedMesh name="Bear" geometry={nodes.Bear.geometry} material={materials.Gaudi} skeleton={nodes.Bear.skeleton} />
-              <skinnedMesh name="EL" geometry={nodes.EL.geometry} material={materials.Gaudi} skeleton={nodes.EL.skeleton} />
-              <skinnedMesh name="ER" geometry={nodes.ER.geometry} material={materials.Gaudi} skeleton={nodes.ER.skeleton} />
-              <skinnedMesh name="Eyebrow_L" geometry={nodes.Eyebrow_L.geometry} material={materials.Gaudi} skeleton={nodes.Eyebrow_L.skeleton} />
-              <skinnedMesh name="Eyebrow_R" geometry={nodes.Eyebrow_R.geometry} material={materials.Gaudi} skeleton={nodes.Eyebrow_R.skeleton} />
-              <skinnedMesh name="Hair" geometry={nodes.Hair.geometry} material={materials.Gaudi} skeleton={nodes.Hair.skeleton} />
-              <skinnedMesh name="Hat" geometry={nodes.Hat.geometry} material={materials.Gaudi} skeleton={nodes.Hat.skeleton} />
-              <skinnedMesh name="Shirt1" geometry={nodes.Shirt1.geometry} material={materials.Gaudi} skeleton={nodes.Shirt1.skeleton} />
-              <skinnedMesh name="Teeth_Inf" geometry={nodes.Teeth_Inf.geometry} material={materials.Gaudi} skeleton={nodes.Teeth_Inf.skeleton} />
-              <skinnedMesh name="Teeth_Sup" geometry={nodes.Teeth_Sup.geometry} material={materials.Gaudi} skeleton={nodes.Teeth_Sup.skeleton} />
-              <skinnedMesh name="Tongue" geometry={nodes.Tongue.geometry} material={materials.Gaudi} skeleton={nodes.Tongue.skeleton} />
-              <skinnedMesh name="Body1" geometry={nodes.Body1.geometry} material={materials.Gaudi} skeleton={nodes.Body1.skeleton} />
+              <skinnedMesh catShadow name="Bear" geometry={nodes.Bear.geometry} material={materials.Gaudi} skeleton={nodes.Bear.skeleton} />
+              <skinnedMesh catShadow name="EL" geometry={nodes.EL.geometry} material={materials.Gaudi} skeleton={nodes.EL.skeleton} />
+              <skinnedMesh catShadow name="ER" geometry={nodes.ER.geometry} material={materials.Gaudi} skeleton={nodes.ER.skeleton} />
+              <skinnedMesh catShadow name="Eyebrow_L" geometry={nodes.Eyebrow_L.geometry} material={materials.Gaudi} skeleton={nodes.Eyebrow_L.skeleton} />
+              <skinnedMesh catShadow name="Eyebrow_R" geometry={nodes.Eyebrow_R.geometry} material={materials.Gaudi} skeleton={nodes.Eyebrow_R.skeleton} />
+              <skinnedMesh catShadow name="Hair" geometry={nodes.Hair.geometry} material={materials.Gaudi} skeleton={nodes.Hair.skeleton} />
+              <skinnedMesh catShadow name="Hat" geometry={nodes.Hat.geometry} material={materials.Gaudi} skeleton={nodes.Hat.skeleton} />
+              <skinnedMesh catShadow name="Shirt1" geometry={nodes.Shirt1.geometry} material={materials.Gaudi} skeleton={nodes.Shirt1.skeleton} />
+              <skinnedMesh catShadow name="Teeth_Inf" geometry={nodes.Teeth_Inf.geometry} material={materials.Gaudi} skeleton={nodes.Teeth_Inf.skeleton} />
+              <skinnedMesh catShadow name="Teeth_Sup" geometry={nodes.Teeth_Sup.geometry} material={materials.Gaudi} skeleton={nodes.Teeth_Sup.skeleton} />
+              <skinnedMesh catShadow name="Tongue" geometry={nodes.Tongue.geometry} material={materials.Gaudi} skeleton={nodes.Tongue.skeleton} />
+              <skinnedMesh catShadow name="Body1" geometry={nodes.Body1.geometry} material={materials.Gaudi} skeleton={nodes.Body1.skeleton} />
             </group>
           </group>
           <group name="MotionSystem">

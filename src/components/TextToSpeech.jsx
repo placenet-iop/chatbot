@@ -44,19 +44,20 @@ const TextToSpeech = () => {
       <form 
         onSubmit={handleUserText}
         action="" 
-        className="fixed left-0 bottom-[1px] w-full bg-stone-700 space-x-2 pt-2 opacity-80 box-message py-2 mx-auto">
+        className="fixed left-0 bottom-[1px] w-full bg-stone-600 space-x-2 pt-2 box-message py-2 mx-auto">
         <input 
           value={userText}
           onChange={event => setUserText(event.target.value)}
-          className="bg-white w-80 border rounded-full border-gray-800 p-2 outline-none m-3 text-black inline input-message" 
+          className="bg-white w-80 border rounded-full border-gray-900 p-2 outline-none m-3 text-black inline input-message" 
           type="text"
           placeholder="Ask me anything"
         />
         <button 
           disabled={isLoading}
           // onClick={() => speak(userText)}
-          className="text-neutral-900 p-2 px-4 border rounded-full border-gray-800 bg-white disabled:cursor-not-allowed button-message">
-            { isLoading ? 'Loading...' : 'S' }
+          className="text-neutral-900 p-2 px-1 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white">
+{/*             { isLoading ? 'Loading...' : 'S' } */} S
+              <img src="./images/send_black.png" alt="" className="w-10 bg-white" />
         </button>
       </form>
     </div>
