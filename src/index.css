@@ -29,3 +29,15 @@ html, body, #root {
   color: white;
   text-align: center;
 }
+
+.box-message {
+  transform: translate(0, 0);
+}
+
+.input-message {
+  width: 70%;
+}
+
+.botton-message {
+
+}

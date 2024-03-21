@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { createThread } from '../services/apiService'
+//import { createThread } from '../services/apiService'
 
 const TextToSpeech = () => {
 
@@ -7,7 +7,7 @@ const TextToSpeech = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
 
-  useEffect(() => {
+ /*  useEffect(() => {
     const fetchThread = async () => {
       const data = await createThread();
       console.log('data', data)
@@ -16,16 +16,16 @@ const TextToSpeech = () => {
     fetchThread()
     
    
-  }, [])
+  }, []) */
 
   const handleUserText = async (event) => {
-    
     event.preventDefault()
     setIsLoading(true)
     try {
         console.log('usertext', userText)
         console.log('threadId', threadId)
         //const message = await createMessage({ thread_id: threadId, content: userText })
+        let message = "Hola"
         speak(message)
         //console.log('Aqui va el codigo de la API', message)
     } catch (error) {
@@ -44,19 +44,19 @@ const TextToSpeech = () => {
       <form 
         onSubmit={handleUserText}
         action="" 
-        className="absolute top-[900px] left-[300px] space-x-2 pt-2">
+        className="fixed left-0 bottom-[1px] w-full bg-stone-700 space-x-2 pt-2 opacity-80 box-message py-2 mx-auto">
         <input 
           value={userText}
           onChange={event => setUserText(event.target.value)}
-          className="bg-neutral-400 w-[510px] border rounded border-lime-800 p-2 outline-none m-4 text-lime-400" 
+          className="bg-white w-80 border rounded-full border-gray-800 p-2 outline-none m-3 text-black inline input-message" 
           type="text"
           placeholder="Ask me anything"
         />
         <button 
           disabled={isLoading}
           // onClick={() => speak(userText)}
-          className="text-neutral-900 p-2 border rounded-xl disable:text-blue-100 border-lime-800 px-6 bg-neutral-400 disabled:cursor-not-allowed">
-            { isLoading ? 'Loading...' : 'Ask' }
+          className="text-neutral-900 p-2 px-4 border rounded-full border-gray-800 bg-white disabled:cursor-not-allowed button-message">
+            { isLoading ? 'Loading...' : 'S' }
         </button>
       </form>
     </div>

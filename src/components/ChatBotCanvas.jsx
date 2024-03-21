@@ -1,7 +1,7 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useAnimations, Plane, useVideoTexture } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import Character from './Character'
+//import Character from './Character'
 import Gaudi from './Gaudi'
 
 const ChatBotCanvas = () => {
@@ -16,17 +16,17 @@ const ChatBotCanvas = () => {
         console.log("Error accessing camera: ", error.message)
       }
     }
-    //accessCamera();
+    accessCamera();
 
     return () => {
 
     }
   }, [])
 
-  // const VideoMaterial = ({ src }) => {
-  //   const texture = useVideoTexture(src)
-  //   return <meshBasicMaterial map={texture} toneMapped={false} />
-  // }
+  const VideoMaterial = ({ src }) => {
+     const texture = useVideoTexture(src)
+     return <meshBasicMaterial map={texture} toneMapped={false} />
+   }
 
   return (
     <Canvas className="z-10" shadows >
@@ -42,13 +42,13 @@ const ChatBotCanvas = () => {
      
 
      <shadowMaterial transparent opacity={0.2} />
-      {/* <mesh>
+      <mesh>
         <Suspense fallback={<meshBasicMaterial wireframe />}>
           <Plane args={[15, 15]} position={[0, 0, -3]} >
             <VideoMaterial src={stream} />
           </Plane>
         </Suspense>
-      </mesh> */}
+      </mesh> 
     </Canvas>
   )
 }
