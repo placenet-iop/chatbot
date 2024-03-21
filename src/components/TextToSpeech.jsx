@@ -44,7 +44,7 @@ const TextToSpeech = () => {
       <form 
         onSubmit={handleUserText}
         action="" 
-        className="fixed left-0 bottom-[1px] w-full bg-stone-600 space-x-2 pt-2 box-message py-2 mx-auto">
+        className="fixed left-0 bottom-[1px] w-full bg-stone-600 space-x-2 box-message pt-0   mx-auto">
         <input 
           value={userText}
           onChange={event => setUserText(event.target.value)}
@@ -55,9 +55,9 @@ const TextToSpeech = () => {
         <button 
           disabled={isLoading}
           // onClick={() => speak(userText)}
-          className="text-neutral-900 p-2 px-1 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white">
+          className="mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
 {/*             { isLoading ? 'Loading...' : 'S' } */} S
-              <img src="./images/send_black.png" alt="" className="w-10 bg-white" />
+             {/*  <img src="./images/send_white.png" alt="" className="w-8" /> */}
         </button>
       </form>
     </div>
