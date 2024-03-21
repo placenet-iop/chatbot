@@ -16,7 +16,8 @@ const Gaudi = (props) => {
     actions[names[0]].reset().fadeIn(1).play()
   }, [])
 
-  console.log(names)
+  console.log('names en normal', names)
+  console.log('actions en normal', actions)
 
   return (
     <group ref={group} {...props} dispose={null}>

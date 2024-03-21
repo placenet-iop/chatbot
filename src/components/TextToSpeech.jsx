@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 //import { createThread } from '../services/apiService'
+import { IoIosSend } from "react-icons/io";
+
 
 const TextToSpeech = () => {
 
@@ -44,7 +46,7 @@ const TextToSpeech = () => {
       <form 
         onSubmit={handleUserText}
         action="" 
-        className="fixed left-0 bottom-[1px] w-full bg-stone-600 space-x-2 box-message pt-0   mx-auto">
+        className="fixed left-0 bottom-[1px] w-full h-1/7 bg-stone-600 space-x-2 box-message pt-0   mx-auto">
         <input 
           value={userText}
           onChange={event => setUserText(event.target.value)}
@@ -55,10 +57,12 @@ const TextToSpeech = () => {
         <button 
           disabled={isLoading}
           // onClick={() => speak(userText)}
-          className="mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
-{/*             { isLoading ? 'Loading...' : 'S' } */} S
+          className="absolute bottom-3 w-15 mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
+{/*             { isLoading ? 'Loading...' : 'S' } */} 
+<IoIosSend size={24} />
              {/*  <img src="./images/send_white.png" alt="" className="w-8" /> */}
         </button>
+       
       </form>
     </div>
   )
