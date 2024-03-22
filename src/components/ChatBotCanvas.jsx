@@ -3,7 +3,7 @@ import { useAnimations, Plane, useVideoTexture } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 //import Character from './Character'
 import Gaudi from './Gaudi'
-import Gaudi_Clean from './Gaudi_Clean'
+//import Gaudi_v2 from './Gaudi_v2'
 
 const ChatBotCanvas = () => {
   const [stream, setStream] = useState(null)
@@ -47,7 +47,7 @@ const ChatBotCanvas = () => {
      {/* <Character /> */}
 
      <group position={[0, -0.35, 4.2]}>
-      <Gaudi_Clean />
+      <Gaudi />
 
      </group>
       
