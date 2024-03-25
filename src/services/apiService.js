@@ -28,9 +28,18 @@ export const deleteThread = async () => {
 
 export const createMessage = async (dataMessage) => {
     try {
-      const response = await apiService.post('messages', dataMessage);
+      const response = await apiService.post('message', dataMessage);
       return response.data;
     } catch (error) {
       throw error;
     }
-  };
+};
+
+export const convertTextToAudio = async (text) => {
+  try {
+    const response = await apiService.post('voice');
+    return response.data;
+  } catch (error) {
+    error
+  }
+}

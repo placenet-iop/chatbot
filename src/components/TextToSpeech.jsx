@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-//import { createThread } from '../services/apiService'
+import { createThread, createMessage, convertTextToAudio } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
 
 
@@ -9,30 +9,34 @@ const TextToSpeech = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
 
- /*  useEffect(() => {
+
+
+  useEffect(() => {
     const fetchThread = async () => {
       const data = await createThread();
-      console.log('data', data)
-      setThreadId(data)
+      setThreadId(data.thread_id)
     }
     fetchThread()
     
    
-  }, []) */
+  }, []) 
 
   const handleUserText = async (event) => {
     event.preventDefault()
     setIsLoading(true)
     try {
-        console.log('usertext', userText)
-        console.log('threadId', threadId)
-        //const message = await createMessage({ thread_id: threadId, content: userText })
-        let message = "Hola"
-        speak(message)
+       
+        const message = await createMessage({
+          "thread_id": threadId,
+          "content": userText
+        })
+        console.log('gaudi habla', message.content)
+        
+        //speak(message)
         //console.log('Aqui va el codigo de la API', message)
     } catch (error) {
         let message = 'Lo siento, no puedo responder a eso'
-        speak(message)
+        //speak(message)
         if (error instanceof Error) message = error.message
         console.log(message)
     } finally {
