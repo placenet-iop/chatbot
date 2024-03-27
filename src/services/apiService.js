@@ -38,6 +38,7 @@ export const createMessage = async (dataMessage) => {
 export const convertTextToAudio = async (textToAudio) => {
   try {
     const response = await apiService.post('voice', textToAudio);
+    console.log('Headers: ', response.headers)
     return response.data;
   } catch (error) {
     error

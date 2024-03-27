@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html, body, #root {
-  background-color: green;
+  background-color: #666257;
   position: fixed;
   top: 0;
   left: 0;
@@ -41,4 +41,12 @@ html, body, #root {
 
 .botton-message {
 
+}
+
+.userSender {
+  background-color: brown;
+}
+
+.botSender {
+  background-color: yellowgreen;
 }
