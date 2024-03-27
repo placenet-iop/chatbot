@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { createThread, createMessage, convertTextToAudio } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
+import AudioPlayer from './AudioPlayer';
+import ChatMessages from './ChatMessages';
 
 
 const TextToSpeech = () => {
@@ -8,7 +10,7 @@ const TextToSpeech = () => {
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
-
+  const [audioSource, setAudioSource] =  useState(null)
 
 
   useEffect(() => {
@@ -17,9 +19,13 @@ const TextToSpeech = () => {
       setThreadId(data.thread_id)
     }
     fetchThread()
-    
-   
   }, []) 
+
+
+  const playAudio = async (audioSource) => {
+    let audio = new Audio(audioSource)
+    audio.play()
+  }
 
   const handleUserText = async (event) => {
     event.preventDefault()
@@ -32,8 +38,28 @@ const TextToSpeech = () => {
         })
         console.log('gaudi habla', message.content)
         
+        const messageToAudio = {
+          "model": "tts-1",
+          "voice": "onyx",
+          "content": message.content	
+        }
+        console.log(messageToAudio.content)
+        const audioData = await convertTextToAudio(messageToAudio)
+        let audio = new Audio("./assets/response.mp3")
+        audio.play()
+        console.log(audioData)
+        
+        setIsLoading(true)
+        setAudioSource(audioData)
+
+        
+
+        await playAudio(audioSource)
+        
+        
         //speak(message)
-        //console.log('Aqui va el codigo de la API', message)
+        
+        
     } catch (error) {
         let message = 'Lo siento, no puedo responder a eso'
         //speak(message)
@@ -47,6 +73,7 @@ const TextToSpeech = () => {
 
   return (
     <div className="relative top-0 z-50">
+      
       <form 
         onSubmit={handleUserText}
         action="" 
@@ -68,6 +95,8 @@ const TextToSpeech = () => {
         </button>
        
       </form>
+
+      
     </div>
   )
 }

@@ -12,10 +12,8 @@ const Gaudi = (props) => {
   const { actions, names } = useAnimations(animations, group)
 
   useEffect(() => {
-    actions[names[1]].reset().fadeIn(1).play()
+    actions[names[0]].reset().fadeIn(1).play()
   }, [])
-
-  console.log('names en normal', names)
 
   return (
     <group ref={group} {...props} dispose={null}>

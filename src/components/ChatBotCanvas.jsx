@@ -61,6 +61,7 @@ const ChatBotCanvas = () => {
           </Plane>
         </Suspense>
       </mesh> 
+
     </Canvas>
   )
 }
