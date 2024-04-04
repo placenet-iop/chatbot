@@ -12,6 +12,7 @@ const TextToSpeech = () => {
   const [threadId, setThreadId] = useState('')
   const [audioSource, setAudioSource] =  useState(null)
   const [messages, setMessages] = useState([])
+  const [messageToConvertToAudio, setMessageToConvertToAudio] = useState('')
 
 
   useEffect(() => {
@@ -33,50 +34,58 @@ const TextToSpeech = () => {
     
     try {
         setIsLoading(true)
-      
+        setMessages(current => [...current, {
+          sender: 'from-me', 
+          content: userText
+        }])
+        setUserText('')
         const botMessage = await createMessage({
           "thread_id": threadId,
           "content": userText
         })
         console.log('gaudi ====> ', botMessage.content)
         
-        setMessages([ 
-          ...messages,
-          {
-            sender: 'from-me', 
-            content: userText
-          },
-          {
-            sender: 'from-them', 
-            content: botMessage.content
-          }
-        ])
+        // setMessages([ 
+        //   ...messages,
+        //   {
+        //     sender: 'from-me', 
+        //     content: userText
+        //   },
+        //   {
+        //     sender: 'from-them', 
+        //     content: botMessage.content
+        //   }
+        // ])
         
+        setMessages(current => [...current,{
+          sender: 'from-them', 
+          content: botMessage.content
+        }])
+        // Convert Bot Message to Audio
         const messageToAudio = {
           "model": "tts-1",
           "voice": "onyx",
           "content": botMessage.content	
         }
-        console.log(messageToAudio.content)
-        const audioData = await convertTextToAudio(messageToAudio)
-
-        let audio = new Audio("./assets/response.mp3")
-        audio.play()
-        console.log('data audio', audioData)
-        setAudioSource(audioData)
-        //await playAudio(audioSource)
         
-        //speak(message)
+        const audioData = await convertTextToAudio(messageToAudio)
+        console.log(audioData.headers)
+        const audioBase64 = formatAudioToBase64(audioData.data)
+        setMessageToConvertToAudio(uint8Array)
+        // let audio = new Audio(audioBase64)
+        // audio.play()
+        // //console.log('data audio', audioData.data)
+        // setAudioSource(audioBase64)
+        // playAudio(audioBase64)
+        
         
         setIsLoading(true)
         
     } catch (error) {
         let message = 'Lo siento, no puedo responder a eso'
-        //speak(message)
         if (error instanceof Error) message = error.message
-        console.log(message)
     } finally {
-        setUserText('')
+        
         setIsLoading(false)
     }
   }
@@ -85,19 +94,20 @@ const TextToSpeech = () => {
     setUserText(event.target.value)
   }
 
+  const formatAudioToBase64 = (audioData) => {
+    const blobAudio = new Blob([audioData], { type: 'audio/mpeg'})
+    const urlAudio = URL.createObjectURL(blobAudio)
+    const uint8Array = new TextEncoder().encode(urlAudio)
+    const audioBase64 = btoa(String.fromCharCode.apply(null, uint8Array))
+    return audioBase64
+  }
+
   
   return (
     <div className="relative top-0 z-50">
-      <div className="fixed left-0 w-full h-4/7 max-h-48 text-clip overflow-hidden bottom-[65px] p-4 bg-white opacity-80 mx-auto container">
-        <div className="imessage">
-          {messages && messages.map((message, index) => 
-            <p key={index} className={message.sender}>
-              {message.content}
-            </p>  
-          )}
-        </div>
-       
-      </div>
+      {messages.length !== 0 && 
+        <ChatMessages messages={messages} />
+      }
       <form 
         onSubmit={handleUserSubmitText}
         action="" 
@@ -113,12 +123,14 @@ const TextToSpeech = () => {
           disabled={isLoading}
           // onClick={() => speak(userText)}
           className="absolute bottom-3 w-15 mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
-          { isLoading ? 'Loading...' : <IoIosSend size={30} /> }  
+          { isLoading ? '...' : <IoIosSend size={30} /> }  
         </button>
        
       </form>
 
-      
+      {messageToConvertToAudio && 
+          <AudioPlayer messageToConvertToAudio={messageToConvertToAudio} />
+      }
     </div>
   )
 }
