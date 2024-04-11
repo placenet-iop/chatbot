@@ -5,7 +5,7 @@ import { Canvas } from '@react-three/fiber'
 import Gaudi from './Gaudi'
 //import Gaudi_v2 from './Gaudi_v2'
 
-const ChatBotCanvas = () => {
+const ChatBotCanvas = ({ isTalking }) => {
   const [stream, setStream] = useState(null)
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const ChatBotCanvas = () => {
      {/* <Character /> */}
 
      <group position={[0, -0.35, 4.2]}>
-      <Gaudi />
+      <Gaudi isTalking={isTalking} />
 
      </group>
       
@@ -61,6 +61,7 @@ const ChatBotCanvas = () => {
           </Plane>
         </Suspense>
       </mesh> 
+
     </Canvas>
   )
 }
