@@ -5,7 +5,7 @@ import AudioPlayer from './AudioPlayer';
 import ChatMessages from './ChatMessages';
 
 
-const TextToSpeech = () => {
+const TextToSpeech = ({ handleAnimationStatus }) => {
 
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -43,20 +43,12 @@ const TextToSpeech = () => {
           "thread_id": threadId,
           "content": userText
         })
+        
         console.log('gaudi ====> ', botMessage.content)
+        handleAnimationStatus(1)
+        // console.log('*** START of Talking...')
         
-        // setMessages([ 
-        //   ...messages,
-        //   {
-        //     sender: 'from-me', 
-        //     content: userText
-        //   },
-        //   {
-        //     sender: 'from-them', 
-        //     content: botMessage.content
-        //   }
-        // ])
-        
+
         setMessages(current => [...current,{
           sender: 'from-them', 
           content: botMessage.content
@@ -69,17 +61,24 @@ const TextToSpeech = () => {
         }
         
         const audioData = await convertTextToAudio(messageToAudio)
-        console.log(audioData.headers)
+        console.log()
+        console.log('audio headers ', audioData.headers)
         const audioBase64 = formatAudioToBase64(audioData.data)
-        setMessageToConvertToAudio(uint8Array)
-        // let audio = new Audio(audioBase64)
-        // audio.play()
+        console.log('message to convert to audio', audioBase64)
+        setMessageToConvertToAudio(audioBase64)
+
+
+        let audio = new Audio(audioBase64)
+        audio.play()
         // //console.log('data audio', audioData.data)
-        // setAudioSource(audioBase64)
-        // playAudio(audioBase64)
+        setAudioSource(audioBase64)
+        playAudio(audioBase64)
         
         
         setIsLoading(true)
+
+       
+        
         
     } catch (error) {
         let message = 'Lo siento, no puedo responder a eso'
@@ -87,6 +86,9 @@ const TextToSpeech = () => {
     } finally {
         
         setIsLoading(false)
+        // Stop talking
+        handleAnimationStatus(1)
+        // console.log('*** END of Talking...')
     }
   }
 
@@ -97,8 +99,9 @@ const TextToSpeech = () => {
   const formatAudioToBase64 = (audioData) => {
     const blobAudio = new Blob([audioData], { type: 'audio/mpeg'})
     const urlAudio = URL.createObjectURL(blobAudio)
-    const uint8Array = new TextEncoder().encode(urlAudio)
-    const audioBase64 = btoa(String.fromCharCode.apply(null, uint8Array))
+    // const uint8Array = new TextEncoder().encode(urlAudio)
+    const audioBase64 = btoa(String.fromCharCode.apply(null, urlAudio))
+    console.log('audio 64', audioBase64)
     return audioBase64
   }
 
