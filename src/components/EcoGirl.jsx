@@ -10,11 +10,11 @@ const EcoGirl = (props) => {
   const group = useRef()
   const { nodes, materials, animations } = useGLTF('./assets/EcoGirl.glb')
   const { actions, names } = useAnimations(animations, group)
-  console.log('names', names)
+  // console.log('names', names)
 
   useEffect(() => {
     
-    actions[names[0]].reset().fadeIn(1).play()
+    actions[names[1]].reset().fadeIn(1).play()
   }, [])
   
   return (

@@ -31,12 +31,6 @@ const ChatBotCanvas = ({ isTalking }) => {
 
   return (
     <Canvas className="z-10" shadows >
-      {/* <OrbitControls 
-        enableZoom={false}
-        enableDamping
-        minAzimuthAngle={-Math.PI * 0.05}
-        maxAzimuthAngle={Math.PI * 0.05}
-      /> */}
       <ambientLight />
       <directionalLight
         position={[-5, 5, 5]}
@@ -44,16 +38,12 @@ const ChatBotCanvas = ({ isTalking }) => {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-     {/* <Character /> */}
 
      <group position={[0, -0.35, 4.2]}>
       {/* <Gaudi isTalking={isTalking} /> */}
       <EcoGirl />
-
      </group>
       
-     
-
      <shadowMaterial transparent opacity={0.2} />
       <mesh>
         <Suspense fallback={<meshBasicMaterial wireframe />}>
