@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createThread, createMessage, convertTextToAudio } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
 import AudioPlayer from './AudioPlayer';
 import ChatMessages from './ChatMessages';
+
 
 
 const TextToSpeech = ({ handleAnimationStatus }) => {
@@ -12,7 +13,7 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
   const [threadId, setThreadId] = useState('')
   const [audioSource, setAudioSource] =  useState(null)
   const [messages, setMessages] = useState([])
-  const [messageToConvertToAudio, setMessageToConvertToAudio] = useState('')
+  const [binaryAudioData, setBinaryAudioData] = useState(null)
 
 
   useEffect(() => {
@@ -24,10 +25,6 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
   }, []) 
 
 
-  const playAudio = async (audioSource) => {
-    let audio = new Audio(audioSource)
-    audio.play()
-  }
 
   const handleUserSubmitText = async (event) => {
     event.preventDefault()
@@ -43,12 +40,9 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
           "thread_id": threadId,
           "content": userText
         })
+      
+       
         
-        console.log('gaudi ====> ', botMessage.content)
-        handleAnimationStatus(1)
-        // console.log('*** START of Talking...')
-        
-
         setMessages(current => [...current,{
           sender: 'from-them', 
           content: botMessage.content
@@ -60,28 +54,17 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
           "content": botMessage.content	
         }
         
+        // get the audio from api
         const audioData = await convertTextToAudio(messageToAudio)
-        console.log()
-        console.log('audio headers ', audioData.headers)
-        const audioBase64 = formatAudioToBase64(audioData.data)
-        console.log('message to convert to audio', audioBase64)
-        setMessageToConvertToAudio(audioBase64)
-
-
-        let audio = new Audio(audioBase64)
-        audio.play()
-        // //console.log('data audio', audioData.data)
-        setAudioSource(audioBase64)
-        playAudio(audioBase64)
         
-        
+        let binaryData = audioData.data
+        setBinaryAudioData(binaryData)
         setIsLoading(true)
 
-       
-        
-        
+      
     } catch (error) {
         let message = 'Lo siento, no puedo responder a eso'
+        console.log(message, error)
         if (error instanceof Error) message = error.message
     } finally {
         
@@ -96,14 +79,18 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
     setUserText(event.target.value)
   }
 
-  const formatAudioToBase64 = (audioData) => {
-    const blobAudio = new Blob([audioData], { type: 'audio/mpeg'})
-    const urlAudio = URL.createObjectURL(blobAudio)
-    // const uint8Array = new TextEncoder().encode(urlAudio)
-    const audioBase64 = btoa(String.fromCharCode.apply(null, urlAudio))
-    console.log('audio 64', audioBase64)
-    return audioBase64
+  const handlePlay = () => {
+    setAnimate(true)
   }
+
+  const handleEnded = () => {
+    setAnimate(false)
+  }
+
+  const handlePause = () => {
+    setAnimate(false)
+  }
+
 
   
   return (
@@ -124,16 +111,19 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
         />
         <button 
           disabled={isLoading}
-          // onClick={() => speak(userText)}
           className="absolute bottom-3 w-15 mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
           { isLoading ? '...' : <IoIosSend size={30} /> }  
         </button>
-       
       </form>
 
-      {messageToConvertToAudio && 
-          <AudioPlayer messageToConvertToAudio={messageToConvertToAudio} />
-      }
+     
+      <AudioPlayer 
+        binaryAudioData={binaryAudioData} 
+        onPlay={handlePlay}
+        onEnded={handleEnded}
+        onPause={handlePause}
+      />
+    
     </div>
   )
 }
