@@ -1,6 +1,7 @@
 import ChatBotCanvas from "./components/ChatBotCanvas"
 import TextToSpeech from "./components/TextToSpeech"
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import './App.css'
 
 function App() {
@@ -18,11 +19,19 @@ function App() {
     setIsTalking(modelStatus)
   }
 
+  // return (
+  //   <>
+  //     <TextToSpeech handleAnimationStatus={handleAnimation} />
+  //     <ChatBotCanvas isTalking={isTalking} />
+  //   </>
+  // )
   return (
-    <>
-      <TextToSpeech handleAnimationStatus={handleAnimation} />
-      <ChatBotCanvas isTalking={isTalking} />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<GaudiPage />} />
+        <Route path="/eco-girl" element={<EcoGirlPage />} />
+      </Routes>
+    </Router>
   )
 }
 
