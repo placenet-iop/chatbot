@@ -5,19 +5,27 @@ import AudioPlayer from '../components/AudioPlayer'
 
 
 const GaudiPage = () => {
+    const [isTalking, setIsTalking] = useState(false)
+    const [messageAudio, setMessageAudio] = useState(null)
 
 
     const handlePlay = () => {
-        setAnimate(true)
+        setIsTalking(true)
     }
 
     const handleEnded = () => {
-        setAnimate(false)
+        setIsTalking(false)
     }
      
   return (
     <div>
-      
+      <ChatBotCanvas isTalking={isTalking} />
+      <TextToSpeech />
+      <AudioPlayer 
+        messageAudio={messageAudio}
+        onPlay={handlePlay}
+        onEnded={handleEnded}
+      />
     </div>
   )
 }
