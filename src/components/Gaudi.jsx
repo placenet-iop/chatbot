@@ -14,7 +14,11 @@ const Gaudi = (props) => {
 
   useEffect(() => {
     // console.log('en gaudi', isTalking)
-    actions[names[isTalking]].reset().fadeIn(1).play()
+    if(isTalking){
+      actions[names[1]].reset().fadeIn(1).play()
+    } else {
+      actions[names[0]].reset().fadeIn(1).play()
+    }
   }, [isTalking])
 
   return (

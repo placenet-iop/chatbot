@@ -2,6 +2,8 @@ import ChatBotCanvas from "./components/ChatBotCanvas"
 import TextToSpeech from "./components/TextToSpeech"
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import GaudiPage from './pages/GaudiPage'
+import EcoGirlPage from "./pages/EcoGirlPage"
 import './App.css'
 
 function App() {
@@ -29,7 +31,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<GaudiPage />} />
-        <Route path="/eco-girl" element={<EcoGirlPage />} />
+        <Route path="/ecogirl" element={<EcoGirlPage />} />
       </Routes>
     </Router>
   )

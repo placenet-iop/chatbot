@@ -7,14 +7,18 @@ import React, { useRef, useEffect } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 
 const EcoGirl = (props) => {
+  const { isTalking } = props
   const group = useRef()
   const { nodes, materials, animations } = useGLTF('./assets/EcoGirl.glb')
   const { actions, names } = useAnimations(animations, group)
   console.log('names', names)
 
   useEffect(() => {
-    
-    actions[names[0]].reset().fadeIn(1).play()
+    if(isTalking){
+      actions[names[1]].reset().fadeIn(1).play()
+    } else {
+      actions[names[0]].reset().fadeIn(1).play()
+    }
   }, [])
   
   return (
