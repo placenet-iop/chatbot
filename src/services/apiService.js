@@ -6,6 +6,24 @@ const apiService = axios.create({
     baseURL: API_BASE_URL,
   });
 
+export const getAssistantsLocal = async () => {
+  try {
+    const response = await apiService.get('assistant/local');
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const createAssistant = async (dataAssistant) => {
+  try {
+    const response = await apiService.post('assistant', dataAssistant)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const createThread = async () => {
     try {
       const response = await apiService.post('threads');
@@ -15,7 +33,7 @@ export const createThread = async () => {
     }
 };
 
-/*
+
 export const deleteThread = async () => {
     try {
       const response = await apiService.delete('threads');
@@ -24,7 +42,7 @@ export const deleteThread = async () => {
       throw error;
     }
 };
-*/
+
 
 export const createMessage = async (dataMessage) => {
     try {

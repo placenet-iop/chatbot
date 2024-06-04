@@ -2,7 +2,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useAnimations, Plane, useVideoTexture } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import Gaudi from './Gaudi'
-import EcoGirl from './EcoGirl'
+// import EcoGirl from './EcoGirl'
 
 
 const ChatBotCanvas = ({ selectedModel, isTalking }) => {
@@ -47,9 +47,9 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
      {/* <Character /> */}
 
      <group position={[0, -0.35, 4.2]}>
-      {/* <Gaudi isTalking={isTalking} /> */}
+      <Gaudi isTalking={isTalking} />
       {/* {selectedModel == 'gaudi' && ()} */}
-      <EcoGirl />
+      {/* <EcoGirl /> */}
 
      </group>
       
