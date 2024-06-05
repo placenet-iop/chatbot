@@ -19,7 +19,7 @@ const EcoGirl = (props) => {
     } else {
       actions[names[0]].reset().fadeIn(1).play()
     }
-  }, [])
+  }, [isTalking])
   
   return (
     <group ref={group} {...props} dispose={null}>

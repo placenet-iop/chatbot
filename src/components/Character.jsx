@@ -4,7 +4,7 @@ import EcoGirl from './EcoGirl'
 import { useEffect } from 'react'
 
 const Character = ({ selectedModel, isSpeaking }) => {
-  let characterToRender;
+  let characterToRender = [];
 
   useEffect(() => {
     if(isSpeaking) {
@@ -15,9 +15,9 @@ const Character = ({ selectedModel, isSpeaking }) => {
   }, [isSpeaking])
 
   if(selectedModel == 'gaudi') {
-    characterToRender = <Gaudi />
+    characterToRender = <Gaudi isSpeaking={isSpeaking} />
   } else {
-    characterToRender = <EcoGirl />
+    characterToRender = <EcoGirl isSpeaking={isSpeaking} />
   }
   return (
     {characterToRender}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ChatBotCanvas from '../components/ChatBotCanvas'
-import TextToSpeech from '../components/TextToSpeech'
+import TextToSpeech from '../components/ChatText'
 import AudioPlayer from '../components/AudioPlayer'
 
 const EcoGirlPage = () => {
@@ -16,7 +16,7 @@ const EcoGirlPage = () => {
     }
   return (
     <div>
-      <ChatBotCanvas isTalking={isTalking} />
+      <ChatBotCanvas isTalking={isTalking} selectedModel="ecogirl"/>
       <TextToSpeech />
       <AudioPlayer 
         messageAudio={messageAudio}

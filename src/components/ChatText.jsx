@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { createThread, createMessage, convertTextToAudio } from '../services/apiService'
+import { createThread, createMessage, convertTextToAudio, getAssistantsLocal } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
 import AudioPlayer from './AudioPlayer';
 import ChatMessages from './ChatMessages';
 
 
-const TextToSpeech = ({ handleAnimationStatus }) => {
-
+const ChatText = ({ handleAnimationStatus }) => {
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
@@ -20,7 +19,7 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
       const data = await createThread();
       setThreadId(data.thread_id)
     }
-    fetchThread()
+   // fetchThread()
   }, []) 
 
 
@@ -77,8 +76,7 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
         
         setIsLoading(true)
 
-       
-        
+    
         
     } catch (error) {
         let message = 'Lo siento, no puedo responder a eso'
@@ -99,7 +97,6 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
   const formatAudioToBase64 = (audioData) => {
     const blobAudio = new Blob([audioData], { type: 'audio/mpeg'})
     const urlAudio = URL.createObjectURL(blobAudio)
-    // const uint8Array = new TextEncoder().encode(urlAudio)
     const audioBase64 = btoa(String.fromCharCode.apply(null, urlAudio))
     console.log('audio 64', audioBase64)
     return audioBase64
@@ -138,4 +135,4 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
   )
 }
 
-export default TextToSpeech
+export default ChatText
