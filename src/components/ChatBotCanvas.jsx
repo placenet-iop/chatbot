@@ -1,8 +1,7 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useAnimations, Plane, useVideoTexture } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import Gaudi from './Gaudi'
-// import EcoGirl from './EcoGirl'
+import Character from './Character'
 
 
 const ChatBotCanvas = ({ selectedModel, isTalking }) => {
@@ -31,12 +30,7 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
 
   return (
     <Canvas className="z-10" shadows >
-      {/* <OrbitControls 
-        enableZoom={false}
-        enableDamping
-        minAzimuthAngle={-Math.PI * 0.05}
-        maxAzimuthAngle={Math.PI * 0.05}
-      /> */}
+    
       <ambientLight />
       <directionalLight
         position={[-5, 5, 5]}
@@ -44,10 +38,10 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-     {/* <Character /> */}
+     <Character />
 
      <group position={[0, -0.35, 4.2]}>
-      <Gaudi isTalking={isTalking} />
+      {/* <Gaudi isTalking={isTalking} /> */}
       {/* {selectedModel == 'gaudi' && ()} */}
       {/* <EcoGirl /> */}
 
