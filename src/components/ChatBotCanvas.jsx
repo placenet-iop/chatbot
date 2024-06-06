@@ -3,6 +3,7 @@ import { useAnimations, Plane, useVideoTexture } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import Character from './Character'
 import EcoGirl from './EcoGirl'
+import Gaudi from './Gaudi'
 
 
 const ChatBotCanvas = ({ selectedModel, isTalking }) => {
@@ -30,7 +31,7 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
    }
 
   return (
-    <Canvas className="z-10" shadows >
+    <Canvas className="z-50" shadows >
     
       <ambientLight />
       <directionalLight
@@ -39,14 +40,9 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-     <Character />
-
-     <group position={[0, -0.35, 4.2]}>
-      {/* <Gaudi isTalking={isTalking} /> */}
-      {/* {selectedModel == 'gaudi' && ()} */}
-      {/* <EcoGirl isTalking={isTalking} /> */}
-      {/* <Character selectedModel="gaudi" /> */}
-
+   
+     <group position={[0, -1.15, 4.2]}>
+      {selectedModel == "gaudi" ? <Gaudi isTalking={isTalking} /> : <EcoGirl isTalking={isTalking} />}
      </group>
       
      

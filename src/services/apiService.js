@@ -29,7 +29,7 @@ export const createAssistant = async (dataAssistant) => {
 
 export const createThread = async (dataAssistant) => {
     try {
-      const response = await apiService.post('threads', dataAssistant);
+      const response = await apiService.post('thread', dataAssistant);
       return response.data;
     } catch (error) {
       throw error;
@@ -39,7 +39,7 @@ export const createThread = async (dataAssistant) => {
 
 export const deleteThread = async () => {
     try {
-      const response = await apiService.delete('threads');
+      const response = await apiService.delete('thread');
       return response.data;
     } catch (error) {
       throw error;
@@ -58,7 +58,7 @@ export const createMessage = async (dataMessage) => {
 
 export const convertTextToAudio = async (textToAudio) => {
   try {
-    const response = await apiService.post('voice', textToAudio);
+    const response = await apiService.post('tts', textToAudio, { responseType: 'blob' });
     return response;
   } catch (error) {
     error

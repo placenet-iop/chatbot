@@ -14,6 +14,11 @@ const EcoGirlPage = () => {
     const handleEnded = () => {
         setAnimate(false)
     }
+
+    const fetchBinaryAudioData = (binaryAudioData) => {
+      setBinaryAudioData(binaryAudioData)
+      
+    }
   return (
     <div>
       <ChatBotCanvas isTalking={isTalking} selectedModel="ecogirl"/>
