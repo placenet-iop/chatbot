@@ -1,5 +1,3 @@
-import ChatBotCanvas from "./components/ChatBotCanvas"
-import TextToSpeech from "./components/ChatText"
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import GaudiPage from './pages/GaudiPage'

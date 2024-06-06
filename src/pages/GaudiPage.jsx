@@ -8,8 +8,8 @@ import { getAssistantsLocal, createAssistant } from '../services/apiService'
 
 const GaudiPage = () => {
     const [isTalking, setIsTalking] = useState(false)
-    const [messageToAudio, setMessageToAudio] = useState(null)
     const [assistantType, setAssistantType] = useState(null)
+    const [binaryAudioData, setBinaryAudioData] = useState(null )
 
     useEffect(() => {
       const fetchAssistant = async () => {
@@ -28,7 +28,7 @@ const GaudiPage = () => {
       fetchAssistant()
     }, []) 
 
-    console.log('assistant type', assistantType)
+  
     const handlePlay = () => {
         setIsTalking(true)
     }
@@ -40,23 +40,30 @@ const GaudiPage = () => {
     const handleAnimationStatus = () => {
 
     }
+
+    const fetchBinaryAudioData = (binaryAudioData) => {
+      setBinaryAudioData(binaryAudioData)
+      
+    }
      
   return (
-    <div>
-      {/* <ChatBotCanvas isTalking={isTalking} selectedModel="gaudi"/> */}
+    <>
       { assistantType && 
         <ChatText 
-          handleAnimationStatus={handleAnimationStatus} 
+          fetchBinaryAudioData={fetchBinaryAudioData} 
           assistantType={assistantType} 
         />
       }
-      
       {/* <AudioPlayer 
-        messageTo Audio={messageToAudio}
+        binaryAudioData={binaryAudioData}
         onPlay={handlePlay}
         onEnded={handleEnded}
       /> */}
-    </div>
+      <ChatBotCanvas 
+        isTalking={isTalking} 
+        selectedModel={assistantType}
+        />
+    </>
   )
 }
 

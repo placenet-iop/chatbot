@@ -31,7 +31,7 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
    }
 
   return (
-    <Canvas className="z-50" shadows >
+    <Canvas className="z-10" shadows >
     
       <ambientLight />
       <directionalLight
@@ -41,7 +41,7 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
         shadow-mapSize-height={1024}
       />
    
-     <group position={[0, -1.15, 4.2]}>
+     <group position={[0, -0.45, 4]} >
       {selectedModel == "gaudi" ? <Gaudi isTalking={isTalking} /> : <EcoGirl isTalking={isTalking} />}
      </group>
       
