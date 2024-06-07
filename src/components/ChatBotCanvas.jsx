@@ -41,7 +41,7 @@ const ChatBotCanvas = ({ selectedModel, isTalking }) => {
         shadow-mapSize-height={1024}
       />
    
-     <group position={[0, -0.45, 4]} >
+     <group position={[0, -0.15, 3.9]} >
       {selectedModel == "gaudi" ? <Gaudi isTalking={isTalking} /> : <EcoGirl isTalking={isTalking} />}
      </group>
       
