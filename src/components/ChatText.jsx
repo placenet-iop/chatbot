@@ -49,9 +49,13 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
           content: botMessage.content
         }])
         // Convert Bot Message to Audio
+        let characterVoice = "onyx"
+        if(assistantType == "ecogirl"){
+          characterVoice = "ecogirl"
+        }
         const messageToAudio = {
           "model": "tts-1",
-          "voice": "onyx",
+          "voice": characterVoice,
           "content": botMessage.content	
         }
         
