@@ -23,60 +23,60 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
       setThreadId(data.thread_id)
     }
     fetchThread()
-  }, []) 
+  }, [])
 
 
 
   const handleUserSubmitText = async (event) => {
     event.preventDefault()
     try {
-        setIsLoading(true)
-        setMessages(current => [...current, {
-          sender: 'from-me', 
-          content: userText
-        }])
-        setUserText('')
-        const botMessage = await createMessage({
-          "thread_id": threadId,
-          "content": userText
-        })
-        
-        console.log('gaudi ====> ', botMessage.content)
-        //handleAnimationStatus(1)
-      
-        setMessages(current => [...current,{
-          sender: 'from-them', 
-          content: botMessage.content
-        }])
-        // Convert Bot Message to Audio
-        let characterVoice = "onyx"
-        if(assistantType == "ecogirl"){
-          characterVoice = "ecogirl"
-        }
-        const messageToAudio = {
-          "model": "tts-1",
-          "voice": characterVoice,
-          "content": botMessage.content	
-        }
-        
-        
+      setIsLoading(true)
+      setMessages(current => [...current, {
+        sender: 'from-me',
+        content: userText
+      }])
+      setUserText('')
+      const botMessage = await createMessage({
+        "thread_id": threadId,
+        "content": userText
+      })
 
-        // get the audio from api
-        const audioData = await convertTextToAudio(messageToAudio)
+      console.log('gaudi ====> ', botMessage.content)
+      //handleAnimationStatus(1)
 
-        let audio = new Audio(audioData)
-        audio.play()
+      setMessages(current => [...current, {
+        sender: 'from-them',
+        content: botMessage.content
+      }])
+      // Convert Bot Message to Audio
+      let characterVoice = "onyx"
+      if (assistantType == "ecogirl") {
+        characterVoice = "ecogirl"
+      }
+      const messageToAudio = {
+        "model": "tts-1",
+        "voice": characterVoice,
+        "content": botMessage.content
+      }
 
-        let binaryData = audioData.data
-        setBinaryAudioData(binaryData)
-        fetchBinaryAudioData(binaryData)
-        setIsLoading(true)
 
-    
-        
+
+      // get the audio from api
+      const audioData = await convertTextToAudio(messageToAudio)
+
+      let audio = new Audio(audioData)
+      audio.play()
+
+      let binaryData = audioData.data
+      setBinaryAudioData(binaryData)
+      fetchBinaryAudioData(binaryData)
+      setIsLoading(true)
+
+
+
     } catch (error) {
-        let message = 'Lo siento, no puedo responder a eso'
-        if (error instanceof Error) message = error.message
+      let message = 'Lo siento, no puedo responder a eso'
+      if (error instanceof Error) message = error.message
     } finally {
       setIsLoading(false)
     }
@@ -87,7 +87,7 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
   }
 
   const formatAudioToBase64 = (audioData) => {
-    const blobAudio = new Blob([audioData], { type: 'audio/mpeg'})
+    const blobAudio = new Blob([audioData], { type: 'audio/mpeg' })
     const urlAudio = URL.createObjectURL(blobAudio)
     const audioBase64 = btoa(String.fromCharCode.apply(null, urlAudio))
     console.log('audio 64', audioBase64)
@@ -96,32 +96,32 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
 
   const playAudio = async (audioSource) => {
     let audio = new Audio(audioSource)
-   // audio.play()
+    // audio.play()
   }
 
-  
+
   return (
     <div className="relative top-0 z-50">
-      {messages.length !== 0 && 
+      {messages.length !== 0 &&
         <ChatMessages messages={messages} />
       }
-      <form 
+      <form
         onSubmit={handleUserSubmitText}
-        action="" 
+        action=""
         className="fixed left-0 bottom-[0px] w-full h-1/7 bg-stone-600 space-x-2 box-message pt-0 mx-auto">
-        <input 
+        <input
           value={userText}
           onChange={handleChange}
-          className="bg-white w-80 border rounded-full border-gray-900 p-2 outline-none m-3 text-black inline input-message" 
+          className="bg-white w-80 border rounded-full border-gray-900 p-2 outline-none m-3 text-black inline input-message"
           type="text"
           placeholder="Ask me anything"
         />
-        <button 
+        <button
           disabled={isLoading}
           className="absolute bottom-3 w-15 mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
-          { isLoading ? '...' : <IoIosSend size={30} /> }  
+          {isLoading ? '...' : <IoIosSend size={30} />}
         </button>
-       
+
       </form>
 
       {/* {binaryAudioData && 

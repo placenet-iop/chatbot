@@ -7,20 +7,20 @@ const Character = ({ selectedModel, isSpeaking }) => {
   let characterToRender = [];
 
   useEffect(() => {
-    if(isSpeaking) {
+    if (isSpeaking) {
 
     } else {
 
     }
   }, [isSpeaking])
 
-  if(selectedModel == 'gaudi') {
+  if (selectedModel == 'gaudi') {
     characterToRender = <Gaudi isSpeaking={isSpeaking} />
   } else {
     characterToRender = <EcoGirl isSpeaking={isSpeaking} />
   }
   return (
-    {characterToRender}
+    { characterToRender }
   )
 }
 

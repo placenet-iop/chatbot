@@ -7,51 +7,51 @@ import { getAssistantsLocal, createAssistant } from '../services/apiService'
 
 
 const GaudiPage = () => {
-    const [isTalking, setIsTalking] = useState(false)
-    const [assistantType, setAssistantType] = useState(null)
-    const [binaryAudioData, setBinaryAudioData] = useState(null )
+  const [isTalking, setIsTalking] = useState(false)
+  const [assistantType, setAssistantType] = useState(null)
+  const [binaryAudioData, setBinaryAudioData] = useState(null)
 
-    useEffect(() => {
-      const fetchAssistant = async () => {
-        const data = await getAssistantsLocal()
-        let needToCreateAssistant = true
-        for(let assistant of data) {
-          if(assistant.assistant_type == "gaudi"){
-            needToCreateAssistant = false
-            setAssistantType(assistant.assistant_type)
-          }
-        }
-        if(needToCreateAssistant) {
-          await createAssistant(gaudiDetails)
+  useEffect(() => {
+    const fetchAssistant = async () => {
+      const data = await getAssistantsLocal()
+      let needToCreateAssistant = true
+      for (let assistant of data) {
+        if (assistant.assistant_type == "gaudi") {
+          needToCreateAssistant = false
+          setAssistantType(assistant.assistant_type)
         }
       }
-      fetchAssistant()
-    }, []) 
-
-  
-    const handlePlay = () => {
-        setIsTalking(true)
+      if (needToCreateAssistant) {
+        await createAssistant(gaudiDetails)
+      }
     }
+    fetchAssistant()
+  }, [])
 
-    const handleEnded = () => {
-        setIsTalking(false)
-    }
 
-    const handleAnimationStatus = () => {
+  const handlePlay = () => {
+    setIsTalking(true)
+  }
 
-    }
+  const handleEnded = () => {
+    setIsTalking(false)
+  }
 
-    const fetchBinaryAudioData = (binaryAudioData) => {
-      setBinaryAudioData(binaryAudioData)
-      
-    }
-     
+  const handleAnimationStatus = () => {
+
+  }
+
+  const fetchBinaryAudioData = (binaryAudioData) => {
+    setBinaryAudioData(binaryAudioData)
+
+  }
+
   return (
     <>
-      { assistantType && 
-        <ChatText 
-          fetchBinaryAudioData={fetchBinaryAudioData} 
-          assistantType={assistantType} 
+      {assistantType &&
+        <ChatText
+          fetchBinaryAudioData={fetchBinaryAudioData}
+          assistantType={assistantType}
         />
       }
       {/* <AudioPlayer 
@@ -59,10 +59,10 @@ const GaudiPage = () => {
         onPlay={handlePlay}
         onEnded={handleEnded}
       /> */}
-      <ChatBotCanvas 
-        isTalking={isTalking} 
+      <ChatBotCanvas
+        isTalking={isTalking}
         selectedModel={assistantType}
-        />
+      />
     </>
   )
 }
