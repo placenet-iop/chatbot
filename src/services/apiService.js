@@ -64,3 +64,12 @@ export const convertTextToAudio = async (textToAudio) => {
     error
   }
 }
+
+export const analyzeImage = async (dataImage) => {
+  try {
+    const response = await apiService.post('image', dataImage);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
