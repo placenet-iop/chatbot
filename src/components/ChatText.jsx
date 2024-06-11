@@ -29,7 +29,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     const fetchMessagesFromImage = async () => {
       let dataImage = removePrefix(capturedImage)
       const result = await analyzeImage({ image: dataImage });
-        console.log('las respuesta a la imagen', result)
       setMessages((current) => [...current, {
         sender: 'from-them',
         content: result,  
@@ -106,10 +105,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     } catch (error) {
       let message = 'Lo siento, no puedo responder a eso'
       if (error instanceof Error) message = error.message
-      setMessages(current => [...current, {
-        sender: 'from-them',
-        content: message
-      }])
     } finally {
       setIsLoading(false)
     }
