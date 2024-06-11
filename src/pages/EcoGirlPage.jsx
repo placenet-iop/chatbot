@@ -48,7 +48,7 @@ const EcoGirlPage = () => {
   };
   return (
     <>
-      <div style={{ textAlign: 'center', marginTop: '10px', display: 'relative', zIndex: 200 }}>
+      <div style={{ textAlign: 'center', paddingTop: '10px', display: 'relative', zIndex: 200 }}>
         <WebcamCapture onCapture={handleCapture} />
       </div>
       {assistantType &&
