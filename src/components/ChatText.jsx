@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
-import { createThread, createMessage, convertTextToAudio, getAssistantsLocal } from '../services/apiService'
+import { createThread, createMessage, convertTextToAudio, getAssistantsLocal, analyzeImage } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
 import AudioPlayer from './AudioPlayer';
 import ChatMessages from './ChatMessages';
 
 
-const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
+const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCapture }) => {
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
   const [messages, setMessages] = useState([])
-  const [messageToConvertToAudio, setMessageToConvertToAudio] = useState('')
-  const [binaryAudioData, setBinaryAudioData] = useState(null)
+  // const [messageToConvertToAudio, setMessageToConvertToAudio] = useState('')
+  // const [binaryAudioData, setBinaryAudioData] = useState(null)
 
 
   useEffect(() => {
@@ -23,10 +23,32 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
       setThreadId(data.thread_id)
     }
     fetchThread()
-  }, [])
 
+   
 
+    const fetchMessagesFromImage = async () => {
+      let dataImage = removePrefix(capturedImage)
+      const result = await analyzeImage({ image: dataImage });
+        console.log('las respuesta a la imagen', result)
+      setMessages((current) => [...current, {
+        sender: 'from-them',
+        content: result,  
+      }]);
+      onCapture(null);
+    }
 
+    if(capturedImage){
+      setIsLoading(true)
+      fetchMessagesFromImage()
+      setIsLoading(false)
+    }
+  }, [assistantType, capturedImage])
+
+  const removePrefix = (imageData) => {
+    const parts = imageData.split(',');
+    return parts[1];
+  }
+  
   const handleUserSubmitText = async (event) => {
     event.preventDefault()
     try {
@@ -36,29 +58,36 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
         content: userText
       }])
       setUserText('')
+
+      // Handle captured image if provided
+      // console.log('despues de analizar al imagen, que hacemos?', capturedImage)
+      // if (capturedImage) {
+      //   const analysis = await analyzeImage({ image: capturedImage });
+        
+      //   setMessages((current) => [...current, {
+      //     sender: 'from-them',
+      //     content: analysis.result,  
+      //   }]);
+      //   onCapture(null);
+      // } 
       const botMessage = await createMessage({
         "thread_id": threadId,
         "content": userText
       })
 
-      console.log('gaudi ====> ', botMessage.content)
-      //handleAnimationStatus(1)
-
       setMessages(current => [...current, {
         sender: 'from-them',
         content: botMessage.content
       }])
+
       // Convert Bot Message to Audio
-      let characterVoice = "onyx"
-      if (assistantType == "ecogirl") {
-        characterVoice = "nova"
-      }
+      let characterVoice = assistantType === "ecogirl" ? "nova" : "onyx";
       const messageToAudio = {
         "model": "tts-1",
         "voice": characterVoice,
         "content": botMessage.content
-      }
-
+      
+    } 
 
 
       // get the audio from api
@@ -77,6 +106,10 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
     } catch (error) {
       let message = 'Lo siento, no puedo responder a eso'
       if (error instanceof Error) message = error.message
+      setMessages(current => [...current, {
+        sender: 'from-them',
+        content: message
+      }])
     } finally {
       setIsLoading(false)
     }
@@ -86,18 +119,18 @@ const ChatText = ({ fetchBinaryAudioData, assistantType }) => {
     setUserText(event.target.value)
   }
 
-  const formatAudioToBase64 = (audioData) => {
-    const blobAudio = new Blob([audioData], { type: 'audio/mpeg' })
-    const urlAudio = URL.createObjectURL(blobAudio)
-    const audioBase64 = btoa(String.fromCharCode.apply(null, urlAudio))
-    console.log('audio 64', audioBase64)
-    return audioBase64
-  }
+  // const formatAudioToBase64 = (audioData) => {
+  //   const blobAudio = new Blob([audioData], { type: 'audio/mpeg' })
+  //   const urlAudio = URL.createObjectURL(blobAudio)
+  //   const audioBase64 = btoa(String.fromCharCode.apply(null, urlAudio))
+  //   console.log('audio 64', audioBase64)
+  //   return audioBase64
+  // }
 
-  const playAudio = async (audioSource) => {
-    let audio = new Audio(audioSource)
-    // audio.play()
-  }
+  // const playAudio = async (audioSource) => {
+  //   let audio = new Audio(audioSource)
+  //   // audio.play()
+  // }
 
 
   return (

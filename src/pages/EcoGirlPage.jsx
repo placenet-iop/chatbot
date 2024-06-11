@@ -4,7 +4,7 @@ import ChatText from '../components/ChatText'
 import AudioPlayer from '../components/AudioPlayer'
 import WebcamCapture from '../components/WebcamCapture';
 import { ecogirlDetails } from './../data/ecogirl';
-import { getAssistantsLocal, createAssistant } from '../services/apiService'
+import { getAssistantsLocal, createAssistant, analyzeImage } from '../services/apiService'
 
 const EcoGirlPage = () => {
   const [isTalking, setIsTalking] = useState(false)
@@ -40,28 +40,23 @@ const EcoGirlPage = () => {
 
   const fetchBinaryAudioData = (binaryAudioData) => {
     setBinaryAudioData(binaryAudioData)
-
   }
 
   const handleCapture = (imageSrc) => {
     setCapturedImage(imageSrc);
-    console.log('Captured image in Base64:', imageSrc);
+    //console.log('Captured image in Base64:', imageSrc);
   };
   return (
     <>
       <div style={{ textAlign: 'center', marginTop: '10px', display: 'relative', zIndex: 200 }}>
         <WebcamCapture onCapture={handleCapture} />
-        {/* {capturedImage && (
-          <div>
-            <h3>Captured Image:</h3>
-            <img src={capturedImage} alt="Captured" style={{ maxWidth: '100%', marginTop: '10px' }} />
-          </div>
-        )} */}
       </div>
       {assistantType &&
         <ChatText
           fetchBinaryAudioData={fetchBinaryAudioData}
           assistantType={assistantType}
+          capturedImage={capturedImage}
+          onCapture={handleCapture}
         />
       }
 
