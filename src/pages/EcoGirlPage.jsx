@@ -44,7 +44,6 @@ const EcoGirlPage = () => {
 
   const handleCapture = (imageSrc) => {
     setCapturedImage(imageSrc);
-    //console.log('Captured image in Base64:', imageSrc);
   };
   return (
     <>

@@ -10,8 +10,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
   const [messages, setMessages] = useState([])
-  // const [messageToConvertToAudio, setMessageToConvertToAudio] = useState('')
-  // const [binaryAudioData, setBinaryAudioData] = useState(null)
 
 
   useEffect(() => {
@@ -23,8 +21,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       setThreadId(data.thread_id)
     }
     fetchThread()
-
-   
 
     const fetchMessagesFromImage = async () => {
       let dataImage = removePrefix(capturedImage)
@@ -58,17 +54,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       }])
       setUserText('')
 
-      // Handle captured image if provided
-      // console.log('despues de analizar al imagen, que hacemos?', capturedImage)
-      // if (capturedImage) {
-      //   const analysis = await analyzeImage({ image: capturedImage });
-        
-      //   setMessages((current) => [...current, {
-      //     sender: 'from-them',
-      //     content: analysis.result,  
-      //   }]);
-      //   onCapture(null);
-      // } 
       const botMessage = await createMessage({
         "thread_id": threadId,
         "content": userText
@@ -99,9 +84,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       setBinaryAudioData(binaryData)
       fetchBinaryAudioData(binaryData)
       setIsLoading(true)
-
-
-
     } catch (error) {
       let message = 'Lo siento, no puedo responder a eso'
       if (error instanceof Error) message = error.message
@@ -114,19 +96,10 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     setUserText(event.target.value)
   }
 
-  // const formatAudioToBase64 = (audioData) => {
-  //   const blobAudio = new Blob([audioData], { type: 'audio/mpeg' })
-  //   const urlAudio = URL.createObjectURL(blobAudio)
-  //   const audioBase64 = btoa(String.fromCharCode.apply(null, urlAudio))
-  //   console.log('audio 64', audioBase64)
-  //   return audioBase64
-  // }
-
   // const playAudio = async (audioSource) => {
   //   let audio = new Audio(audioSource)
   //   // audio.play()
   // }
-
 
   return (
     <div className="relative top-0 z-50">

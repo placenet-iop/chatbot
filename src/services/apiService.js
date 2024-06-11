@@ -36,7 +36,6 @@ export const createThread = async (dataAssistant) => {
     }
 };
 
-
 export const deleteThread = async () => {
     try {
       const response = await apiService.delete('thread');

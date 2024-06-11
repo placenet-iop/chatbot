@@ -10,21 +10,13 @@ function App() {
   const [isTalking, setIsTalking] = useState(0)
   
   useEffect(() => {   
-    // console.log('en app en useEffect', isTalking)   
     setIsTalking(isTalking)
   }, [isTalking]);
 
   const handleAnimation = (modelStatus) => {
-    // console.log('en app pero en handle Animation', isTalking, modelStatus)
     setIsTalking(modelStatus)
   }
 
-  // return (
-  //   <>
-  //     <TextToSpeech handleAnimationStatus={handleAnimation} />
-  //     <ChatBotCanvas isTalking={isTalking} />
-  //   </>
-  // )
   return (
     <Router>
       <Routes>
