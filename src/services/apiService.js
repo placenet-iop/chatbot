@@ -51,7 +51,7 @@ export const convertTextToAudio = async (textToAudio) => {
 export const analyzeImage = async (dataImage) => {
   try {
     const response = await apiService.post('image', dataImage);
-    return response;
+    return response.data;
   } catch (error) {
     error
   }
@@ -60,7 +60,7 @@ export const analyzeImage = async (dataImage) => {
 export const getAssistantsLocal = async () => {
   try {
     const response = await apiService.get('assistant/local');
-    return response;
+    return response.data;
   } catch (error) {
     error
   }

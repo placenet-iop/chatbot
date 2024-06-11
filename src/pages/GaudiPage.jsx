@@ -15,7 +15,7 @@ const GaudiPage = () => {
     const fetchAssistant = async () => {
       const data = await getAssistantsLocal()
       let needToCreateAssistant = true
-      for (let assistant of data.data) {
+      for (let assistant of data) {
         if (assistant.assistant_type == "gaudi") {
           needToCreateAssistant = false
           setAssistantType(assistant.assistant_type)
