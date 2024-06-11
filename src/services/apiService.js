@@ -11,9 +11,9 @@ const apiService = axios.create({
 
 apiService.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-export const createThread = async () => {
+export const createThread = async (dataAssistant) => {
     try {
-      const response = await apiService.post('thread');
+      const response = await apiService.post('thread', dataAssistant);
       return response.data;
     } catch (error) {
       throw error;
@@ -42,6 +42,33 @@ export const createMessage = async (dataMessage) => {
 export const convertTextToAudio = async (textToAudio) => {
   try {
     const response = await apiService.post('tts', textToAudio, { responseType: 'blob' });
+    return response;
+  } catch (error) {
+    error
+  }
+}
+
+export const analyzeImage = async (dataImage) => {
+  try {
+    const response = await apiService.post('image', dataImage);
+    return response.data;
+  } catch (error) {
+    error
+  }
+}
+
+export const getAssistantsLocal = async () => {
+  try {
+    const response = await apiService.get('assistant/local');
+    return response.data;
+  } catch (error) {
+    error
+  }
+}
+
+export const createAssistant = async (dataAssistant) => {
+  try {
+    const response = await apiService.post('assistant', dataAssistant);
     return response;
   } catch (error) {
     error

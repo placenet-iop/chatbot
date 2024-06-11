@@ -26,6 +26,7 @@ const EcoGirlPage = () => {
       if (needToCreateAssistant) {
         await createAssistant(ecogirlDetails)
       }
+      
     }
     fetchAssistant()
   }, [])
