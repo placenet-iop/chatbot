@@ -5,7 +5,7 @@ import Gaudi from './Gaudi'
 import EcoGirl from './EcoGirl'
 
 
-const ChatBotCanvas = ({ isTalking }) => {
+const ChatBotCanvas = ({ isTalking, selectedModel }) => {
   const [stream, setStream] = useState(null)
 
   useEffect(() => {
@@ -40,8 +40,20 @@ const ChatBotCanvas = ({ isTalking }) => {
       />
 
      <group position={[0, -0.35, 4.2]}>
-      {/* <Gaudi isTalking={isTalking} /> */}
-      <EcoGirl />
+      
+      {/* <EcoGirl /> */}
+
+    
+       {selectedModel == 'gaudi' && (
+         <Gaudi isTalking={isTalking} /> 
+       )} 
+
+        {selectedModel == 'ecogirl' && (
+         <EcoGirl isTalking={isTalking} /> 
+       )} 
+      {/* <EcoGirl /> */}
+      {/* <EcoGirl isTalking={isTalking} /> */}
+    
      </group>
       
      <shadowMaterial transparent opacity={0.2} />
