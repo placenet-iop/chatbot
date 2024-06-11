@@ -1,9 +1,26 @@
 import { useGLTF } from '@react-three/drei'
+import Gaudi from './Gaudi'
+import EcoGirl from './EcoGirl'
+import { useEffect } from 'react'
 
-const Character = () => {
-  const model = useGLTF('/assets/EcoGirl.gltf')
+const Character = ({ selectedModel, isSpeaking }) => {
+  let characterToRender = [];
+
+  useEffect(() => {
+    if (isSpeaking) {
+
+    } else {
+
+    }
+  }, [isSpeaking])
+
+  if (selectedModel == 'gaudi') {
+    characterToRender = <Gaudi isSpeaking={isSpeaking} />
+  } else {
+    characterToRender = <EcoGirl isSpeaking={isSpeaking} />
+  }
   return (
-    <primitive object={model.scene} scale={7}  position={[0, -3, 0]} />
+    { characterToRender }
   )
 }
 
