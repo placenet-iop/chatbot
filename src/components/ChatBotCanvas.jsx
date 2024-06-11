@@ -11,7 +11,7 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
   useEffect(() => {
     const accessCamera = async () => {
       try {
-        setStream(await navigator.mediaDevices.getUserMedia({ video: true }) )
+        setStream(await navigator.mediaDevices.getUserMedia({ video: true }))
       }
       catch (error) {
         console.log("Error accessing camera: ", error.message)
@@ -25,9 +25,9 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
   }, [])
 
   const VideoMaterial = ({ src }) => {
-     const texture = useVideoTexture(src)
-     return <meshBasicMaterial map={texture} toneMapped={false} />
-   }
+    const texture = useVideoTexture(src)
+    return <meshBasicMaterial map={texture} toneMapped={false} />
+  }
 
   return (
     <Canvas className="z-10" shadows >
@@ -39,31 +39,23 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
         shadow-mapSize-height={1024}
       />
 
-     <group position={[0, -0.35, 4.2]}>
-      
-      {/* <EcoGirl /> */}
-
-    
-       {selectedModel == 'gaudi' && (
-         <Gaudi isTalking={isTalking} /> 
-       )} 
-
+      <group position={[0, -0.15, 3.9]}>
+        {selectedModel == 'gaudi' && (
+          <Gaudi isTalking={isTalking} />
+        )}
         {selectedModel == 'ecogirl' && (
-         <EcoGirl isTalking={isTalking} /> 
-       )} 
-      {/* <EcoGirl /> */}
-      {/* <EcoGirl isTalking={isTalking} /> */}
-    
-     </group>
-      
-     <shadowMaterial transparent opacity={0.2} />
+          <EcoGirl isTalking={isTalking} />
+        )}
+      </group>
+
+      <shadowMaterial transparent opacity={0.2} />
       <mesh>
         <Suspense fallback={<meshBasicMaterial wireframe />}>
           <Plane args={[15, 15]} position={[0, 0, -3]} >
             <VideoMaterial src={stream} />
           </Plane>
         </Suspense>
-      </mesh> 
+      </mesh>
 
     </Canvas>
   )
