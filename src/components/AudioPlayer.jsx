@@ -1,41 +1,38 @@
 import { useEffect, useState, useRef } from 'react'
 import { convertTextToAudio } from '../services/apiService'
 
-const AudioPlayer = ({ binaryAudioData }) => {
+const AudioPlayer = ({ binaryAudioData, onPlay, onEnded, onPause }) => {
 
-  const [audioSrc, setAudioSrc] = useState(null)
+    const audioRef = useRef(null)
+    
+    useEffect(() => {
+        const audio = audioRef.current
+        const blob = new Blob([binaryAudioData], {type: 'audio/mp3'})
+        const url = URL.createObjectURL(blob)
+        audio.src = url
 
-  useEffect(() => {
-    const blob = new Blob([binaryAudioData], { type: 'audio/mp3' })
-    const audioUrl = URL.createObjectURL(blob)
-    setAudioSrc(audioUrl)
+        console.log('audio', audio)
 
+        if(audio) {
+          console.log('audio converted', audio)
+          audioRef.current.play()
+        }
+    }, [binaryAudioData, onPlay, onEnded, onPause ]);
 
-  }, [binaryAudioData]);
+    const playAudio = () => {
+      audioRef.current.play()
+    }
 
-  const playAudio = () => {
-    audioRef.current.play()
-  }
-
-  const pauseAudio = () => {
-    audioRef.current.pause()
-  }
-
-  const fetchBinaryAudioData = (binaryAudioData) => {
-    const blob = new Blob([binaryAudioData], { type: 'audio/mp3' })
-    const audioUrl = URL.createObjectURL(blob)
-
-    console.log('audio =>', audioUrl)
-    setAudioSrc(audioUrl)
-  }
-
-
+    const pauseAudio = () => {
+      audioRef.current.pause()
+    }
+   
+   
   return (
     <div>
-      <audio controls autoPlay >
-        <source src={audioSrc} type="audio/mp3" />
-        Your browser does not support the audio element.
-      </audio>
+        <audio ref={audioRef} autoPlay />
+        <button onClick={playAudio}>Play</button>
+        <button onClick={pauseAudio}>Pause</button>
     </div>
   )
 }

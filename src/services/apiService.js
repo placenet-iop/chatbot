@@ -4,32 +4,16 @@ import axios from 'axios'
 const API_BASE_URL = "https://gaudi.placenet.app/"
 const token = 'eyJhbGciOiJIUzI1NiJ9.e30.77jIMuXSD9tezpPN6A0mrG5AG8Vvgd32Qg5OTmjVvYA';
 
+
 const apiService = axios.create({
     baseURL: API_BASE_URL,
   });
+
 apiService.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-export const getAssistantsLocal = async () => {
-  try {
-    const response = await apiService.get('assistant/local');
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export const createAssistant = async (dataAssistant) => {
-  try {
-    const response = await apiService.post('assistant', dataAssistant)
-    return response.data
-  } catch (error) {
-    throw error
-  }
-}
-
-export const createThread = async (dataAssistant) => {
+export const createThread = async () => {
     try {
-      const response = await apiService.post('thread', dataAssistant);
+      const response = await apiService.post('thread');
       return response.data;
     } catch (error) {
       throw error;
@@ -63,12 +47,3 @@ export const convertTextToAudio = async (textToAudio) => {
     error
   }
 }
-
-export const analyzeImage = async (dataImage) => {
-  try {
-    const response = await apiService.post('image', dataImage);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
