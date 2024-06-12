@@ -1,9 +1,8 @@
 import { useEffect, useState, Suspense } from 'react'
-import { useAnimations, Plane, useVideoTexture } from '@react-three/drei'
+import { Plane, useVideoTexture } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import Gaudi from './Gaudi'
 import EcoGirl from './EcoGirl'
-
 
 const ChatBotCanvas = ({ isTalking, selectedModel }) => {
   const [stream, setStream] = useState(null)
@@ -18,9 +17,7 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
       }
     }
     accessCamera();
-
     return () => {
-
     }
   }, [])
 
@@ -30,7 +27,7 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
   }
 
   return (
-    <Canvas className="z-10" shadows >
+    <Canvas className="z-10" shadows orthographic camera={{ zoom: 70, position: [0, 0, 100] }} >
       <ambientLight />
       <directionalLight
         position={[-5, 5, 5]}
@@ -39,7 +36,7 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
         shadow-mapSize-height={1024}
       />
 
-      <group position={[0, -0.15, 3.9]}>
+      <group position={[0, -0.35, 20.9]} scale={[8, 8, 8]}className="z-20">
         {selectedModel == 'gaudi' && (
           <Gaudi isTalking={isTalking} />
         )}
@@ -51,7 +48,7 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
       <shadowMaterial transparent opacity={0.2} />
       <mesh>
         <Suspense fallback={<meshBasicMaterial wireframe />}>
-          <Plane args={[15, 15]} position={[0, 0, -3]} >
+          <Plane args={[15, 15]} position={[0, 0, -10]} >
             <VideoMaterial src={stream} />
           </Plane>
         </Suspense>
