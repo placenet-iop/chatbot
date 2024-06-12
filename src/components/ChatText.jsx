@@ -4,7 +4,7 @@ import { IoIosSend } from "react-icons/io";
 import ChatMessages from './ChatMessages';
 
 
-const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCapture, fetchConvertedAudio }) => {
+const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCapture, fetchConvertedAudio, handlePlay, handleEnded }) => {
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
@@ -29,9 +29,13 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
         content: result,  
       }]);
       onCapture(null);
+      setTimeout(() =>{
+        handleEnded()
+      }, 2000)
     }
 
     if(capturedImage){
+      handlePlay()
       setIsLoading(true)
       fetchMessagesFromImage()
       setIsLoading(false)
@@ -46,6 +50,7 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
   const handleUserSubmitText = async (event) => {
     event.preventDefault()
     try {
+      handlePlay()
       setIsLoading(true)
       setMessages(current => [...current, {
         sender: 'from-me',
@@ -86,6 +91,7 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       if (error instanceof Error) message = error.message
     } finally {
       setIsLoading(false)
+      handleEnded()
     }
   }
 

@@ -19,7 +19,7 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
     accessCamera();
     return () => {
     }
-  }, [])
+  }, [isTalking])
 
   const VideoMaterial = ({ src }) => {
     const texture = useVideoTexture(src)

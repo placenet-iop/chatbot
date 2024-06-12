@@ -28,6 +28,7 @@ const GaudiPage = () => {
       }
     }
     fetchAssistant()
+    
   }, [])
 
 
@@ -58,6 +59,8 @@ const GaudiPage = () => {
           fetchBinaryAudioData={fetchBinaryAudioData}
           fetchConvertedAudio={fetchConvertedAudio}
           assistantType={assistantType}
+          handlePlay={handlePlay}
+          handleEnded={handleEnded}
         />
       }
       {/* {binaryAudioData && 
