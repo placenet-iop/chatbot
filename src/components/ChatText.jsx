@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { createThread, createMessage, convertTextToAudio, getAssistantsLocal, analyzeImage } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
-import AudioPlayer from './AudioPlayer';
 import ChatMessages from './ChatMessages';
 
 
@@ -75,12 +74,9 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
 
       // get the audio from api
       const audioData = await convertTextToAudio(messageToAudio)
-      console.log('en CHAT_TEXT ----- el  binaryData AUDIO', audioData.data)
-    
       let convertedAudio = formatAudio(audioData.data)
       fetchConvertedAudio(convetedAudio)
 
-      
       //setBinaryAudioData(audioData)
       fetchBinaryAudioData(audioData.data)
       
@@ -103,10 +99,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     setUserText(event.target.value)
   }
 
-  const playAudio = async (audioSource) => {
-    let audio = new Audio(audioSource)
-    // audio.play()
-  }
 
   return (
     <div className="relative top-0 z-50">
@@ -129,18 +121,7 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
           className="absolute bottom-3 w-15 mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
           {isLoading ? '...' : <IoIosSend size={30} />}
         </button>
-
       </form>
-
-      {/* {binaryAudioData && 
-           <AudioPlayer
-           fetchBinaryAudioData={null} 
-           binaryAudioData={binaryAudioData} 
-           onPlay={handlePlay}
-           onEnded={handleEnded}
-           onPause={handlePause}
-         />
-      } */}
     </div>
   )
 }

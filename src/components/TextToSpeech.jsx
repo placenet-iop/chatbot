@@ -1,19 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { createThread, createMessage, convertTextToAudio } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
-import AudioPlayer from './AudioPlayer';
 import ChatMessages from './ChatMessages';
 
 
-
 const TextToSpeech = ({ handleAnimationStatus }) => {
-
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
-  const [audioSource, setAudioSource] =  useState(null)
   const [messages, setMessages] = useState([])
-  const [binaryAudioData, setBinaryAudioData] = useState(null)
+
 
 
   useEffect(() => {
@@ -25,10 +21,8 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
   }, []) 
 
 
-
   const handleUserSubmitText = async (event) => {
-    event.preventDefault()
-    
+    event.preventDefault()  
     try {
         setIsLoading(true)
         setMessages(current => [...current, {
@@ -41,8 +35,6 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
           "content": userText
         })
       
-       
-        
         setMessages(current => [...current,{
           sender: 'from-them', 
           content: botMessage.content
@@ -79,20 +71,6 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
     setUserText(event.target.value)
   }
 
-  const handlePlay = () => {
-    setAnimate(true)
-  }
-
-  const handleEnded = () => {
-    setAnimate(false)
-  }
-
-  const handlePause = () => {
-    setAnimate(false)
-  }
-
-
-  
   return (
     <div className="relative top-0 z-50">
       {messages.length !== 0 && 
@@ -115,15 +93,6 @@ const TextToSpeech = ({ handleAnimationStatus }) => {
           { isLoading ? '...' : <IoIosSend size={30} /> }  
         </button>
       </form>
-
-     
-      <AudioPlayer 
-        binaryAudioData={binaryAudioData} 
-        onPlay={handlePlay}
-        onEnded={handleEnded}
-        onPause={handlePause}
-      />
-    
     </div>
   )
 }

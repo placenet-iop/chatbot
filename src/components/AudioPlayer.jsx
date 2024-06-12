@@ -5,7 +5,6 @@ const AudioPlayer = ({ binaryAudioData, onPlay, onEnded, onPause }) => {
   const audioRef = useRef(null)
 
   useEffect(() => {
-    console.log('binaryAudioData ====== :', binaryAudioData);
     if (!binaryAudioData) {
       console.error('No binaryAudioData provided');
       return;
