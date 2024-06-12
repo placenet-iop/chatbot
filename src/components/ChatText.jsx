@@ -29,6 +29,9 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
         content: result,  
       }]);
       onCapture(null);
+      setTimeout(() =>{
+        handleEnded()
+      }, 2000)
     }
 
     if(capturedImage){

@@ -17,7 +17,6 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
       }
     }
     accessCamera();
-    console.log('is talking ===============', isTalking)
     return () => {
     }
   }, [isTalking])

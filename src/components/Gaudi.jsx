@@ -8,7 +8,6 @@ const Gaudi = (props) => {
   const { actions, names } = useAnimations(animations, group)
 
   useEffect(() => {
-    console.log('en el MODELO GAUDI *******************', isTalking)
     if(isTalking){
       actions[names[0]].reset().fadeIn(1).play()
     } else {

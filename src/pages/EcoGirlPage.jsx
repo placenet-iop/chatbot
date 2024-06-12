@@ -32,11 +32,11 @@ const EcoGirlPage = () => {
   }, [])
 
   const handlePlay = () => {
-    setAnimate(true)
+    setIsTalking(true)
   }
 
   const handleEnded = () => {
-    setAnimate(false)
+    setIsTalking(false)
   }
 
   const fetchBinaryAudioData = (binaryAudioData) => {
@@ -46,6 +46,7 @@ const EcoGirlPage = () => {
   const handleCapture = (imageSrc) => {
     setCapturedImage(imageSrc);
   };
+  
   return (
     <>
       <div style={{ textAlign: 'center', paddingTop: '10px', display: 'relative', zIndex: 200 }}>
@@ -57,6 +58,8 @@ const EcoGirlPage = () => {
           assistantType={assistantType}
           capturedImage={capturedImage}
           onCapture={handleCapture}
+          handlePlay={handlePlay}
+          handleEnded={handleEnded}
         />
       }
 
