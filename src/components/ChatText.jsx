@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import { createThread, createMessage, convertTextToAudio, getAssistantsLocal, analyzeImage } from '../services/apiService'
 import { IoIosSend } from "react-icons/io";
-import AudioPlayer from './AudioPlayer';
 import ChatMessages from './ChatMessages';
 
 
-const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCapture }) => {
+const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCapture, fetchConvertedAudio }) => {
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
@@ -70,19 +69,17 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
         "model": "tts-1",
         "voice": characterVoice,
         "content": botMessage.content
-      
     } 
 
 
       // get the audio from api
       const audioData = await convertTextToAudio(messageToAudio)
+      let convertedAudio = formatAudio(audioData.data)
+      fetchConvertedAudio(convetedAudio)
 
-      let audio = new Audio(audioData)
-      audio.play()
-
-      let binaryData = audioData.data
-      setBinaryAudioData(binaryData)
-      fetchBinaryAudioData(binaryData)
+      //setBinaryAudioData(audioData)
+      fetchBinaryAudioData(audioData.data)
+      
       setIsLoading(true)
     } catch (error) {
       let message = 'Lo siento, no puedo responder a eso'
@@ -92,14 +89,16 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     }
   }
 
+  const formatAudio = async (binaryAudioData) => {
+    const blob = new Blob([binaryAudioData], { type: 'audio/mp3' })
+    const url = URL.createObjectURL(blob)
+    return url
+  }
+
   const handleChange = (event) => {
     setUserText(event.target.value)
   }
 
-  // const playAudio = async (audioSource) => {
-  //   let audio = new Audio(audioSource)
-  //   // audio.play()
-  // }
 
   return (
     <div className="relative top-0 z-50">
@@ -122,18 +121,7 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
           className="absolute bottom-3 w-15 mt-8 p-2 rounded-full bg-amber-950 disabled:cursor-not-allowed button-message text-white px-4">
           {isLoading ? '...' : <IoIosSend size={30} />}
         </button>
-
       </form>
-
-      {/* {binaryAudioData && 
-           <AudioPlayer
-           fetchBinaryAudioData={} 
-           binaryAudioData={binaryAudioData} 
-          //  onPlay={handlePlay}
-          //  onEnded={handleEnded}
-          //  onPause={handlePause}
-         />
-      } */}
     </div>
   )
 }
