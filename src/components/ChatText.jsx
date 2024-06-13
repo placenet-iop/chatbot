@@ -28,7 +28,7 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
         sender: 'from-them',
         content: result,
       }]);
-      
+
       // Convert Bot Message to Audio
       activateAudio(result)
       onCapture(null);
@@ -56,7 +56,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       "content": message
     }
     const audioData = await convertTextToAudio(messageToAudio)
-    console.log('audio data', audioData.data)
     fetchBinaryAudioData(audioData.data)
   }
 
@@ -75,7 +74,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
         "thread_id": threadId,
         "content": userText
       })
-
       setMessages(current => [...current, {
         sender: 'from-them',
         content: botMessage.content
@@ -94,16 +92,9 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     }
   }
 
-  // const formatAudio = async (binaryAudioData) => {
-  //   const blob = new Blob([binaryAudioData], { type: 'audio/mp3' })
-  //   const url = URL.createObjectURL(blob)
-  //   return url
-  // }
-
   const handleChange = (event) => {
     setUserText(event.target.value)
   }
-
 
   return (
     <div className="relative top-0 z-50">

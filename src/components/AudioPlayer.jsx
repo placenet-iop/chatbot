@@ -31,11 +31,9 @@ const AudioPlayer = ({ binaryAudioData, onPlay, onEnded, onPause }) => {
 
     const blob = new Blob([binaryAudioData], { type: 'audio/mpeg' });
     const url = URL.createObjectURL(blob);
-
     audio.src = url;
 
     const handleLoadedMetadata = () => {
-      console.log('Audio metadata loaded', audio.duration);
       audio.play().then(() => {
         onPlay();
       }).catch((error) => {
@@ -43,7 +41,6 @@ const AudioPlayer = ({ binaryAudioData, onPlay, onEnded, onPause }) => {
       });
     };
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-
 
     const handleEnded = () => {
       onEnded();
@@ -58,10 +55,7 @@ const AudioPlayer = ({ binaryAudioData, onPlay, onEnded, onPause }) => {
       audio.src = '';
       URL.revokeObjectURL(url);
     };
-  }, [binaryAudioData, 
-    // onPlay, 
-    // onEnded, 
-    onPause]);
+  }, [binaryAudioData, onPause]);
 
   return (
     <div>

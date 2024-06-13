@@ -1,10 +1,7 @@
 import axios from 'axios'
 
-//const { API_BASE_URL } = process.env
 const API_BASE_URL = "https://gaudi.placenet.app/"
 const token = 'eyJhbGciOiJIUzI1NiJ9.e30.77jIMuXSD9tezpPN6A0mrG5AG8Vvgd32Qg5OTmjVvYA';
-
-
 const apiService = axios.create({
   baseURL: API_BASE_URL,
 });
@@ -46,7 +43,6 @@ export const convertTextToAudio = async (textToAudio) => {
       textToAudio,
       { responseType: 'blob' }
     );
-    console.log('response to AUDIO', response)
     return response;
   } catch (error) {
     error
