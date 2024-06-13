@@ -1,54 +1,70 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react';
 
 const AudioPlayer = ({ binaryAudioData, onPlay, onEnded, onPause }) => {
+  const audioRef = useRef(new Audio());
+  const currentAudioRef = useRef(null);
+  
+  useEffect(() => {
+    const audio = audioRef.current;
+    currentAudioRef.current = audio;
 
-  const audioRef = useRef(null)
+    const cleanupPreviousAudio = () => {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current.currentTime = 0;
+        currentAudioRef.current.src = '';
+      }
+    };
+    cleanupPreviousAudio();
+    return () => {
+      cleanupPreviousAudio();
+    };
+  }, []);
 
   useEffect(() => {
+    const audio = audioRef.current;
+
     if (!binaryAudioData) {
       console.error('No binaryAudioData provided');
       return;
     }
-    const audio = audioRef.current
-    const blob = new Blob([binaryAudioData], { type: 'audio/mp3' })
-    const url = URL.createObjectURL(blob)
-    audio.src = url
 
-    audio.onloadedmetadata = () => {
-      console.log('Audio metadata loaded', audio.duration);
+    const blob = new Blob([binaryAudioData], { type: 'audio/mpeg' });
+    const url = URL.createObjectURL(blob);
+    audio.src = url;
+
+    const handleLoadedMetadata = () => {
+      audio.play().then(() => {
+        onPlay();
+      }).catch((error) => {
+        console.error('Error playing audio:', error);
+      });
     };
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
 
-    audio.onerror = (e) => {
-      console.error('Error loading audio', e);
+    const handleEnded = () => {
+      onEnded();
     };
+    audio.addEventListener('ended', handleEnded);
 
-    audio.onplay = onPlay;
-    audio.onended = onEnded;
-    audio.onpause = onPause;
-
-    // Ensure the audio is ready to play
-    audio.load();
-
-  }, [binaryAudioData, onPlay, onEnded, onPause]);
-
-  const playAudio = () => {
-    audioRef.current.play().catch((e) => {
-      console.error('Error playing audio', e);
-    });
-  };
-
-  const pauseAudio = () => {
-    audioRef.current.pause();
-  };
-
+    return () => {
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('ended', handleEnded);
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = '';
+      URL.revokeObjectURL(url);
+    };
+  }, [binaryAudioData, onPause]);
 
   return (
     <div>
-      <audio ref={audioRef} controls autoPlay />
-      <button onClick={playAudio}>Play</button>
-      <button onClick={pauseAudio}>Pause</button>
+      <audio 
+      style={{ position: 'absolute', top: '-400px' }}
+      ref={audioRef} 
+      controls />
     </div>
-  )
-}
+  );
+};
 
-export default AudioPlayer
+export default AudioPlayer;
