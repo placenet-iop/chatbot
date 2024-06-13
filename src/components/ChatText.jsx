@@ -80,10 +80,11 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       // get the audio from api
       const audioData = await convertTextToAudio(messageToAudio)
       let convertedAudio = formatAudio(audioData.data)
-      fetchConvertedAudio(convetedAudio)
-
-      //setBinaryAudioData(audioData)
+      console.log('audio data', audioData.data)
       fetchBinaryAudioData(audioData.data)
+     // fetchConvertedAudio(convertedAudio)
+
+  
       
       setIsLoading(true)
     } catch (error) {

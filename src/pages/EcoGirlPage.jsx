@@ -26,7 +26,7 @@ const EcoGirlPage = () => {
       if (needToCreateAssistant) {
         await createAssistant(ecogirlDetails)
       }
-      
+
     }
     fetchAssistant()
   }, [])
@@ -46,7 +46,7 @@ const EcoGirlPage = () => {
   const handleCapture = (imageSrc) => {
     setCapturedImage(imageSrc);
   };
-  
+
   return (
     <>
       <div style={{ textAlign: 'center', paddingTop: '10px', display: 'relative', zIndex: 200 }}>
@@ -63,11 +63,12 @@ const EcoGirlPage = () => {
         />
       }
 
-      {/* <AudioPlayer 
-        binaryAudioData={binaryAudioData}
-        onPlay={handlePlay}
-        onEnded={handleEnded}
-      /> */}
+      {binaryAudioData &&
+        <AudioPlayer
+          binaryAudioData={binaryAudioData}
+          onPlay={handlePlay}
+          onEnded={handleEnded}
+        />}
       <ChatBotCanvas
         isTalking={isTalking}
         selectedModel={assistantType}

@@ -46,6 +46,7 @@ export const convertTextToAudio = async (textToAudio) => {
       textToAudio,
       { responseType: 'blob' }
     );
+    console.log('response to AUDIO', response)
     return response;
   } catch (error) {
     error

@@ -5,12 +5,11 @@ import AudioPlayer from '../components/AudioPlayer'
 import { gaudiDetails } from './../data/gaudi';
 import { getAssistantsLocal, createAssistant } from '../services/apiService'
 
-
-
 const GaudiPage = () => {
+
   const [isTalking, setIsTalking] = useState(false)
   const [assistantType, setAssistantType] = useState(null)
-  const [binaryAudioData, setBinaryAudioData] = useState(null)
+  const [binaryAudioData, setBinaryAudioData] = useState(null) // just for temporary audio
   const [convertedAudio, setConvertedAudio] = useState(null)
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const GaudiPage = () => {
       }
     }
     fetchAssistant()
-    
   }, [])
 
 
@@ -48,28 +46,22 @@ const GaudiPage = () => {
     setBinaryAudioData(binaryAudioData)
   }
 
-  const fetchConvertedAudio = (convertedAudio) => {
-    setConvertedAudio(convetedAudio)
-  }
-
   return (
     <>
       {assistantType &&
         <ChatText
           fetchBinaryAudioData={fetchBinaryAudioData}
-          fetchConvertedAudio={fetchConvertedAudio}
           assistantType={assistantType}
           handlePlay={handlePlay}
           handleEnded={handleEnded}
         />
       }
-      {/* {binaryAudioData && 
-        <AudioPlayer 
+      {binaryAudioData &&
+        <AudioPlayer
           binaryAudioData={binaryAudioData}
           onPlay={handlePlay}
           onEnded={handleEnded}
-        />} */}
-
+        />}
 
       <ChatBotCanvas
         isTalking={isTalking}
