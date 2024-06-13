@@ -10,7 +10,7 @@ const ChatMessages = ({ messages }) => {
 
   return (
     <div className="fixed left-0 w-full h-4/6 max-h-96 text-clip bottom-[65px] p-4 
-          bg-white opacity-80 mx-auto container overflow-auto"
+          bg-white opacity-80 mx-auto overflow-auto"
       style={{ maxHeight: "400px" }}
     >
       <div className="imessage " ref={listRef} >
