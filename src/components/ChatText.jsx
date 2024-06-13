@@ -4,7 +4,7 @@ import { IoIosSend } from "react-icons/io";
 import ChatMessages from './ChatMessages';
 
 
-const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCapture, fetchConvertedAudio, handlePlay, handleEnded }) => {
+const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCapture, handlePlay, handleEnded }) => {
   const [userText, setUserText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [threadId, setThreadId] = useState('')
@@ -26,18 +26,19 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       const result = await analyzeImage({ image: dataImage });
       setMessages((current) => [...current, {
         sender: 'from-them',
-        content: result,  
+        content: result,
       }]);
+      
+      // Convert Bot Message to Audio
+      activateAudio(result)
       onCapture(null);
-      setTimeout(() =>{
-        handleEnded()
-      }, 2000)
     }
 
-    if(capturedImage){
+    if (capturedImage) {
       handlePlay()
       setIsLoading(true)
       fetchMessagesFromImage()
+      handleEnded()
       setIsLoading(false)
     }
   }, [assistantType, capturedImage])
@@ -46,7 +47,19 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     const parts = imageData.split(',');
     return parts[1];
   }
-  
+
+  const activateAudio = async (message) => {
+    let characterVoice = assistantType === "ecogirl" ? "nova" : "onyx";
+    const messageToAudio = {
+      "model": "tts-1",
+      "voice": characterVoice,
+      "content": message
+    }
+    const audioData = await convertTextToAudio(messageToAudio)
+    console.log('audio data', audioData.data)
+    fetchBinaryAudioData(audioData.data)
+  }
+
   const handleUserSubmitText = async (event) => {
     event.preventDefault()
     try {
@@ -69,24 +82,9 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       }])
 
       // Convert Bot Message to Audio
-      let characterVoice = assistantType === "ecogirl" ? "nova" : "onyx";
-      const messageToAudio = {
-        "model": "tts-1",
-        "voice": characterVoice,
-        "content": botMessage.content
-    } 
-
-
-      // get the audio from api
-      const audioData = await convertTextToAudio(messageToAudio)
-      let convertedAudio = formatAudio(audioData.data)
-      console.log('audio data', audioData.data)
-      fetchBinaryAudioData(audioData.data)
-     // fetchConvertedAudio(convertedAudio)
-
-  
-      
+      activateAudio(botMessage.content)
       setIsLoading(true)
+
     } catch (error) {
       let message = 'Lo siento, no puedo responder a eso'
       if (error instanceof Error) message = error.message
@@ -96,11 +94,11 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
     }
   }
 
-  const formatAudio = async (binaryAudioData) => {
-    const blob = new Blob([binaryAudioData], { type: 'audio/mp3' })
-    const url = URL.createObjectURL(blob)
-    return url
-  }
+  // const formatAudio = async (binaryAudioData) => {
+  //   const blob = new Blob([binaryAudioData], { type: 'audio/mp3' })
+  //   const url = URL.createObjectURL(blob)
+  //   return url
+  // }
 
   const handleChange = (event) => {
     setUserText(event.target.value)
