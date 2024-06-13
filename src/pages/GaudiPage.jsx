@@ -9,8 +9,7 @@ const GaudiPage = () => {
 
   const [isTalking, setIsTalking] = useState(false)
   const [assistantType, setAssistantType] = useState(null)
-  const [binaryAudioData, setBinaryAudioData] = useState(null) // just for temporary audio
-  const [convertedAudio, setConvertedAudio] = useState(null)
+  const [binaryAudioData, setBinaryAudioData] = useState(null)
 
   useEffect(() => {
     const fetchAssistant = async () => {
@@ -29,17 +28,12 @@ const GaudiPage = () => {
     fetchAssistant()
   }, [])
 
-
   const handlePlay = () => {
     setIsTalking(true)
   }
 
   const handleEnded = () => {
     setIsTalking(false)
-  }
-
-  const handleAnimationStatus = () => {
-
   }
 
   const fetchBinaryAudioData = (binaryAudioData) => {
@@ -58,6 +52,7 @@ const GaudiPage = () => {
       }
       {binaryAudioData &&
         <AudioPlayer
+          key={binaryAudioData}
           binaryAudioData={binaryAudioData}
           onPlay={handlePlay}
           onEnded={handleEnded}
