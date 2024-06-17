@@ -76,15 +76,11 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
       
       // Convert Bot Message to Audio
       await activateAudio(botMessage.content)
-
-      // setTimeout(() => {
-        setMessages(current => [...current, {
-          sender: 'from-them',
-          content: botMessage.content
-        }])
-      // }, 500)
-
-
+      setMessages(current => [...current, {
+        sender: 'from-them',
+        content: botMessage.content
+      }])
+     
       setIsLoading(true)
 
     } catch (error) {
