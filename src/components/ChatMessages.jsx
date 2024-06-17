@@ -13,15 +13,20 @@ const ChatMessages = ({ messages }) => {
           bg-white opacity-80 mx-auto overflow-auto"
       style={{ maxHeight: "400px" }}
     >
-      <div className="imessage " ref={listRef} >
+      <div className="imessage" ref={listRef}>
         {messages && messages.map((message, index) =>
           <p key={index} className={message.sender}>
-            {message.content}
+            {message.content.split('\n').map((part, idx) => (
+              <React.Fragment key={idx}>
+                {part}
+                {idx < message.content.split('\n').length - 1 && <br />}
+              </React.Fragment>
+            ))}
           </p>
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default ChatMessages

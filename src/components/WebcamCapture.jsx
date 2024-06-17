@@ -20,7 +20,7 @@ const WebcamCapture = ({ onCapture }) => {
                 style={{ visibility: 'hidden', position: 'absolute' }}  
             />
             <button
-                style={{ padding: '10px 10px', fontSize: '16px', cursor: 'pointer', color: "#fff" }}
+                style={{ padding: '5px 10px', fontSize: '16px', cursor: 'pointer', color: "#fff" }}
                 onClick={capture}
             >
                 Capture Picture

@@ -62,7 +62,6 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
   const handleUserSubmitText = async (event) => {
     event.preventDefault()
     try {
-      handlePlay()
       setIsLoading(true)
       setMessages(current => [...current, {
         sender: 'from-me',
@@ -74,13 +73,14 @@ const ChatText = ({ fetchBinaryAudioData, assistantType, capturedImage, onCaptur
         "thread_id": threadId,
         "content": userText
       })
+      
+      // Convert Bot Message to Audio
+      await activateAudio(botMessage.content)
       setMessages(current => [...current, {
         sender: 'from-them',
         content: botMessage.content
       }])
-
-      // Convert Bot Message to Audio
-      activateAudio(botMessage.content)
+     
       setIsLoading(true)
 
     } catch (error) {
