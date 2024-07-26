@@ -16,10 +16,12 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
         console.log("Error accessing camera: ", error.message)
       }
     }
-    accessCamera();
+     if(selectedModel=='ecogirl'){
+        accessCamera();
+     }
     return () => {
     }
-  }, [isTalking])
+  }, [isTalking, selectedModel])
 
   const VideoMaterial = ({ src }) => {
     const texture = useVideoTexture(src)
