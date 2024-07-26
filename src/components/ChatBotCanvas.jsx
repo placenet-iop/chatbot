@@ -10,7 +10,9 @@ const ChatBotCanvas = ({ isTalking, selectedModel }) => {
   useEffect(() => {
     const accessCamera = async () => {
       try {
-        setStream(await navigator.mediaDevices.getUserMedia({ video: true }))
+        setStream(await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { exact: 'environment' } } // Using 'exact' to ensure we get the back camera
+        }))
       }
       catch (error) {
         console.log("Error accessing camera: ", error.message)
